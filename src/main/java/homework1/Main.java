@@ -20,7 +20,7 @@ public class Main {
     }
 
     static boolean summ(int a, int b){
-        if ((a + b) >= 10 && (a + b) <= 20){
+        if (a + b >= 10 && a + b <= 20){
             return true;
         }
         return false;
@@ -35,21 +35,21 @@ public class Main {
     }
 
     static boolean num(int a){
-        if (a >= 0) {
-            return false;
-        } else {
-            return true;
-        }
+       return a >= 0;
     }
 
     static void printName(String name){
         System.out.println("Привет, " + name + "!");
     }
 
+    static boolean checkYear(int year) {
+        return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
+    }
+
     static void printYear(int year){
-        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0){
+        if (checkYear(year)){
             System.out.println("Год высокосный");
-        }else {
+        } else {
             System.out.println("Год невысокосный");
         }
     }
