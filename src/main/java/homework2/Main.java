@@ -33,6 +33,9 @@ public class Main {
                 arr[i] = 0;
             }
         }
+//        arr[i] = 1 - arr[i];  ещё варианты
+//        arr[i] = arr[i] == 0 ? 1 : 0;
+//        arr[i] ^= 1;
         System.out.println(Arrays.toString(arr));
     }
 
@@ -40,6 +43,7 @@ public class Main {
         int[] intArray = new int[8];
         for (int i = 0; i < intArray.length; i++) {
             intArray[i] = i * 3;
+//          intArray[i] = intArray[i - 1] + 3; ещё вариант при i = 1 в цикле
         }
         System.out.println(Arrays.toString(intArray));
     }
@@ -64,6 +68,26 @@ public class Main {
             System.out.println();
         }
     }
+
+//    public static int [][] factoryArr(int n){ ещё варианты
+//        int [][] arr = new int[n][n];
+//        for (int i = 0; i < n; i++) {
+//            arr[i][i] = 1;
+//            arr[i][n - 1 - i] = 1;
+//        }
+//       return arr;
+//    }
+//    public static int [][] factoryArr(int n){
+//        int [][] arr = new int[n][n];
+//        for (int i = 0; i < n; i++){
+//        for ( int j = 0; i < n; i++){
+//              if (i == j || i + j == n - 1){
+//            arr[i][j] = 1;
+//               }
+//            }
+//        }
+//       return arr;
+//    }
 
     static int maxNum(int n, int diff){
         Random random = new Random();
@@ -97,5 +121,34 @@ public class Main {
             }
         }
         return min;
+    }
+
+    public static boolean checkBalance(int[] arr){
+        int allSum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            allSum += arr[i];
+        }
+        if(allSum % 2 != 0){
+            return false;
+        }
+        int leftSum = 0;
+        int i = 0;
+        while (leftSum < allSum / 2){
+            leftSum += arr[i];
+            i ++;
+        }
+        return leftSum == allSum /2;
+    }
+
+    public static int[] shiftArr(int[] arr, int shift){
+        int counter = shift % arr.length + arr.length; //здесь приводится отрицательный сдвиг(влево) к положительному
+        for (int i = 0; i < shift; i++) {
+            int rightEdge = arr[arr.length - 1]; // здесь запоминается крайний правый элемент
+            for (int j = arr.length - 1; j > 0; j--) {
+                arr[j] = arr[j - 1]; // здесь происходит сам сдвиг вправо
+            }
+            arr[0] = rightEdge;
+        }
+        return arr;
     }
 }
