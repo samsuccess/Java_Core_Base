@@ -3,11 +3,15 @@ package homework3;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Guess {
+public class GuessNumber {
     static int user = 1;
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        play();
+    }
+
+    public static void play(){
         System.out.println("Привет! Сыграем в угадайку?");
         System.out.println("У тебя есть 3 попытки, чтобы угадать число от 0 до 9");
         do {
@@ -17,13 +21,10 @@ public class Guess {
         System.out.println("Игра окончена");
     }
 
+    public static void player(){
 
+        System.out.print("Поехали!\nВведите число: ");
 
-
-
-    public static void player() {
-
-        System.out.print("Поехали: ");
         Random random = new Random();
 
         int guess = random.nextInt(10);
@@ -32,7 +33,7 @@ public class Guess {
         do {
             int answer = scanner.nextInt();
             if (answer == guess) {
-                System.out.println("Поздравляю, вы угадали! Сыграем ещё раз: 1 - ДА, 0 - НЕТ");
+                System.out.println("Поздравляю, вы угадали!\nСыграем ещё раз: 1 - ДА, 0 - НЕТ");
                 return;
             } else if (answer > guess) {
                 System.out.println("Вы ввели слишком большое число.");
@@ -42,11 +43,7 @@ public class Guess {
             count++;
         } while (count != maxCount);
 
-        System.out.println("Вы проиграли :(. Правильный ответ: " + guess + " Сыграем ещё раз: 1 - ДА, 0 - НЕТ");
+        System.out.println("Попыток больше нет. Вы проиграли :(\nПравильный ответ: " + guess + "\nСыграем ещё раз: 1 - ДА, 0 - НЕТ");
         return;
     }
-
-
-
-
 }
