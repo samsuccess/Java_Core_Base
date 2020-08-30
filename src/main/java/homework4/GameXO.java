@@ -42,16 +42,24 @@ public class GameXO {
     }
 
     public static boolean checkWin(char symb) {
-        if (map[0][0] == symb && map[0][1] == symb && map[0][2] == symb) {return true;}
-        if (map[1][0] == symb && map[1][1] == symb && map[1][2] == symb) {return true;}
-        if (map[2][0] == symb && map[2][1] == symb && map[2][2] == symb) {return true;}
+        int j = 0;
+        for (int i = 0; i < DOTS_TO_WIN; i++) {
+             if (map[i][j] == symb && map[i][j + 1] == symb && map[i][j + 2] == symb) {return true;}
+             if (map[j][i] == symb && map[j + 1][i] == symb && map[j + 2][i] == symb) {return true;}
 
-        if (map[0][0] == symb && map[1][0] == symb && map[2][0] == symb) {return true;}
-        if (map[0][1] == symb && map[1][1] == symb && map[2][1] == symb) {return true;}
-        if (map[0][2] == symb && map[1][2] == symb && map[2][2] == symb) {return true;}
+        }
+//        if (map[0][0] == symb && map[0][1] == symb && map[0][2] == symb) {return true;}
+//        if (map[1][0] == symb && map[1][1] == symb && map[1][2] == symb) {return true;}
+//        if (map[2][0] == symb && map[2][1] == symb && map[2][2] == symb) {return true;}
+//        for (int i = 0; i < DOTS_TO_WIN * 2; i++) {
+//
+//        }
+//        if (map[0][0] == symb && map[1][0] == symb && map[2][0] == symb) {return true;}
+//        if (map[0][1] == symb && map[1][1] == symb && map[2][1] == symb) {return true;}
+//        if (map[0][2] == symb && map[1][2] == symb && map[2][2] == symb) {return true;}
 
-        if(map[0][0]==symb &&map[1][1]==symb &&map[2][2]==symb) {return true;}
-        if(map[2][0]==symb &&map[1][1]==symb &&map[0][2]==symb) {return true;}
+        if(map[0][0]==symb && map[1][1]==symb && map[2][2]==symb) {return true;}
+        if(map[2][0]==symb && map[1][1]==symb && map[0][2]==symb) {return true;}
 
         return false;
     }
