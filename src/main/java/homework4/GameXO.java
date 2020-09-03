@@ -19,7 +19,7 @@ public class GameXO {
         while (true) {
             humanTurn();
             printMap();
-            if (checkWin(DOT_X)) {
+            if (checkWin(DOT_X, DOTS_TO_WIN)) {
                 System.out.println("Вы победили! Поздравляем!");
                 break;
             }
@@ -29,7 +29,7 @@ public class GameXO {
             }
             aiTurn();
             printMap();
-            if (checkWin(DOT_O)) {
+            if (checkWin(DOT_O, DOTS_TO_WIN)) {
                 System.out.println("Победил Искуственный Интеллект");
                 break;
             }
@@ -40,29 +40,24 @@ public class GameXO {
         }
         System.out.println("Игра закончена");
     }
-    public static boolean winLine(int x, int y, int dx, int dy, char symb) {
-        for (int i = 0; i < DOTS_TO_WIN; i++) {
-            x = x + i * dx;
-            y = y + i * dy;
-            if (isCellValid(x, y) && map[x][y] != symb){return false;}
+    public static boolean winLine(int x, int y, int dx, int dy, char symb, int dotsToWin) {
+        if (x + dx * (dotsToWin - 1) > SIZE - 1 || y + dy * (dotsToWin - 1) > SIZE - 1 || y + dy * (dotsToWin - 1) < 0) {
+            return false;
+        }
+
+        for (int i = 0; i < dotsToWin; i++) {
+            if (map[x + i * dx][y + i * dy] != symb){return false;}
         }
         return true;
     }
 
-    public static boolean checkWin(char symb) {
+    public static boolean checkWin(char symb, int dotsToWin) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if(map[i][j] == symb){
-                    for (int k = 0; k < SIZE; k++) {
-                        // проверяем строки
-                        if (winLine(k, 0, 0, 1, symb)) {return true;}
-                        // проверяем столбцы
-                        if (winLine(0, k, 1, 0, symb)) {return true;}
-                    }
-                    // проверяем диагонали
-                    if (winLine(0, 0, 1, 1, symb)) {return true;}
-                    if (winLine(0, 0, 1, -1, symb)) {return true;}
-                }
+                if(winLine(i, j, 0, 1, symb, dotsToWin) ||
+                   winLine(i, j, 1, 0, symb, dotsToWin) ||
+                   winLine(i, j, 1, 1, symb, dotsToWin) ||
+                   winLine(i, j, 1, -1, symb, dotsToWin)) {return true;}
             }
         }
         return false;
@@ -92,6 +87,45 @@ public class GameXO {
     public static void aiTurn() {
         int x;
         int y;
+//        попытка победить самому
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (isCellValid(i, j)) {
+                    map[i][j] = DOT_O;
+                    if (checkWin(DOT_O, DOTS_TO_WIN)) {
+                        return;
+                    }
+                    map[i][j] = DOT_EMPTY;
+                }
+            }
+        }
+//  сбить победную линию игрока, если остался один ход для победы
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (isCellValid(i, j)) {
+                    map[i][j] = DOT_X;
+                    if (checkWin(DOT_X, DOTS_TO_WIN)) {
+                        map[i][j] = DOT_O;
+                        return;
+                    }
+                    map[i][j] = DOT_EMPTY;
+                }
+            }
+        }
+//  сбить победную линию игрока, если осталось два хода для победы
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (isCellValid(i, j)) {
+                    map[i][j] = DOT_X;
+                    if (checkWin(DOT_X, DOTS_TO_WIN - 1) && Math.random() < 0.5) {// фактор случайности
+                        map[i][j] = DOT_O;
+                        return;
+                    }
+                    map[i][j] = DOT_EMPTY;
+                }
+            }
+        }
+
         do {
             x = rand.nextInt(SIZE);
             y = rand.nextInt(SIZE);
@@ -108,12 +142,12 @@ public class GameXO {
             System.out.println("Введите координаты в формате X Y");
             x = sc.nextInt() - 1;
             y = sc.nextInt() - 1;
-        } while (!isCellValid(x, y));
+        } while (!isCellValid(y, x));
         map[y][x] = DOT_X;
     }
 
-    public static boolean isCellValid(int x, int y) {
-        if (x < 0 || x > SIZE || y < 0 || y > SIZE) {
+    public static boolean isCellValid(int y, int x) {
+        if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
             return false;
         }
         return map[y][x] == DOT_EMPTY;
