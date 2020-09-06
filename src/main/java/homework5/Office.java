@@ -16,6 +16,12 @@ public class Office {
                 person[i].info();
             }
         }
+        //вариант через for_each
+        for (Employee employee : person) {
+            if (employee.getAge() > 40) {
+                employee.info();
+            }
+        }
     }
 
 }
