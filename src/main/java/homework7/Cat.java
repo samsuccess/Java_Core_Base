@@ -37,4 +37,13 @@ public class Cat {
         }
     }
 
+    public static void infoEat(Plate plate, String name) {
+
+        if (isSatiety()) {
+            System.out.printf("Кот %s поел и сыт, в тарелке осталось %s еды\n", name, plate.getFood());
+        } else {
+            System.out.printf("Кот %s остался голодным, в тарелке мало еды\n", name);
+        }
+    }
+
 }

@@ -24,14 +24,6 @@ public class Plate {
         System.out.printf("В тарелке %s еды\n", food);
     }
 
-    public void infoEat(Cat c, String name) {
-
-        if (c.isSatiety()) {
-            System.out.printf("Кот %s поел и сыт, в тарелке осталось %s еды\n", name, food);
-        } else {
-        System.out.printf("Кот %s остался голодным, в тарелке мало еды\n", name);
-        }
-    }
 
     public int additive(int add) {
      System.out.printf("Хозяин положил добавки %d еды\n", add);

@@ -13,7 +13,7 @@ public class Main {
 
         for (int i = 0; i < cat.length; i++) {
             cat[i].eat(plate);
-            plate.infoEat(cat[i], cat[i].getName());
+            Cat.infoEat(plate, cat[i].getName());
         }
         plate.additive(150);
         plate.info();
@@ -21,7 +21,7 @@ public class Main {
 
         for (int i = 0; i < cat.length; i++) {
             cat[i].eat(plate);
-            plate.infoEat(cat[i], cat[i].getName());
+            Cat.infoEat(plate, cat[i].getName());
         }
     }
 }
