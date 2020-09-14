@@ -1,7 +1,6 @@
-package lesson7a;
+package homework7a;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MyWindow extends JFrame {
 
