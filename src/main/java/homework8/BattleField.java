@@ -7,16 +7,21 @@ import java.awt.event.MouseEvent;
 
 public class BattleField extends JPanel {
     private GameWindow gameWindow;
-
+    public WinWindow winWindow = new WinWindow(this);
+    public WinAiWindow winAiWindow = new WinAiWindow(this);
+    public DrawWindow drawWindow = new DrawWindow(this);
     private int mode;
     private int fieldSize;
-    private int winningLength;
+    private int winLine;
 
     private boolean isInit;
 
     int cellWidth;
     int cellHeight;
 
+//    public WinWindow getWinWindow() {
+//        return winWindow;
+//    }
 
     public BattleField(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
@@ -34,9 +39,18 @@ public class BattleField extends JPanel {
                 if (!Logic.isFinishedGame) {
                     Logic.humanTurn(cellX, cellY);
 
-//                    if(Logic.isFinishedGame){
-//                        //result
-//                    }
+                    if(Logic.isFinishedGame && Logic.winnerHum){
+                        winWindow.setVisible(true);
+
+                    }
+
+                    if (Logic.isFinishedGame && Logic.winnerAi) {
+                        winAiWindow.setVisible(true);
+                    }
+
+                    if (Logic.isFinishedGame && Logic.isFull()) {
+                        drawWindow.setVisible(true);
+                    }
                 }
 
 
@@ -48,7 +62,7 @@ public class BattleField extends JPanel {
     public void startNewGame(int mode, int fieldSize, int winningLength) {
         this.mode = mode;
         this.fieldSize = fieldSize;
-        this.winningLength = winningLength;
+        this.winLine = winLine;
 
         isInit = true;
 
@@ -92,13 +106,16 @@ public class BattleField extends JPanel {
     private void drawO(Graphics g, int cellX, int cellY) {
 //        g.setFont(new Font("Arial", Font.BOLD, 30));
 //        g.drawString("O", cellX * cellWidth + (cellWidth / 2), cellY * cellHeight + (cellHeight / 2));
+        ((Graphics2D) g).setStroke(new BasicStroke(3));
+        g.setColor(Color.DARK_GRAY);
+        g.drawOval(cellX * cellWidth, cellY * cellHeight, cellWidth, cellHeight);
+
     }
 
     private void drawX(Graphics g, int cellX, int cellY) {
-        ((Graphics2D) g).setStroke(new BasicStroke(5));
+        ((Graphics2D) g).setStroke(new BasicStroke(3));
         g.setColor(Color.BLUE);
-        g.drawLine(cellX * cellWidth, cellY * cellHeight,
-                (cellX + 1) * cellWidth, (cellY + 1) * cellHeight);
-
+        g.drawLine(cellX * cellWidth, cellY * cellHeight, (cellX + 1) * cellWidth, (cellY + 1) * cellHeight);
+        g.drawLine(cellX * cellWidth, (cellY + 1) * cellWidth, (cellX +1) * cellHeight, cellY * cellWidth);
     }
 }

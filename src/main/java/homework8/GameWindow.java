@@ -12,7 +12,10 @@ public class GameWindow extends JFrame {
     private BattleField battleField;
     private SettingWindow settingWindow;
 
+
+
     public GameWindow() {
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(WINDOW_X, WINDOW_Y, WINDOW_WIDTH, WINDOW_HEIGHT);
         setTitle("TicTacToe");
@@ -21,6 +24,8 @@ public class GameWindow extends JFrame {
         add(battleField, BorderLayout.CENTER);
 
         settingWindow = new SettingWindow(this);
+
+
 
         JPanel jPanel = new JPanel(new GridLayout(1, 2));
         JButton buttonNewGame = new JButton("Start new game");
@@ -32,6 +37,7 @@ public class GameWindow extends JFrame {
 
         buttonNewGame.addActionListener(e -> {
             settingWindow.setVisible(true);
+
         });
 
         buttonExit.addActionListener(e -> {

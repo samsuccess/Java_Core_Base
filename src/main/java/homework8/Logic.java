@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Logic {
+
     static int SIZE = 5;
     static int DOTS_TO_WIN = 4;
 
@@ -11,16 +12,24 @@ public class Logic {
     static final char DOT_O = 'O';
     static final char DOT_EMPTY = '.';
 
+
+
     static char[][] map;
 
     static Random random = new Random();
 
     static boolean isFinishedGame;
 
-    private static void go() {
+    static boolean winnerHum;
+    static boolean winnerAi;
+    static boolean draw;
+
+    public static void go() {
+
         isFinishedGame = true;
         printMap();
         if (checkWinLines(DOT_X, DOTS_TO_WIN)) {
+            winnerHum = true;
             System.out.println("Вы победили! Поздравляем!");
             return;
         }
@@ -32,15 +41,20 @@ public class Logic {
         aiTurn();
         printMap();
         if (checkWinLines(DOT_O, DOTS_TO_WIN)) {
+            winnerAi = true;
             System.out.println("Компьютер победил.");
             return;
         }
         if (isFull()) {
+            draw = true;
             System.out.println("Ничья");
             return;
         }
 
         isFinishedGame = false;
+        winnerHum = false;
+        winnerAi = false;
+        draw = false;
     }
 
     public static void initMap() {
